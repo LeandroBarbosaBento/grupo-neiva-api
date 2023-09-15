@@ -38,16 +38,28 @@ class AuthController extends Controller
 
     public function logout()
     {
-        return response()->json(['status' => 'working logout']);
-    }
-
-    public function refresh()
-    {
-        return response()->json(['status' => 'working refresh']);
+        try {
+            auth()->logout(true);
+            return response()->json([
+                'message' => 'The user is no longer loged in.',
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     public function me()
     {
-        return response()->json(['status' => 'working me']);
+        try {
+            return response()->json(auth()->user(), 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
     }
 }
