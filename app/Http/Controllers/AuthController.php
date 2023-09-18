@@ -26,7 +26,7 @@ class AuthController extends Controller
             $credentials = $request->only('email', 'password');
             $auth = $this->loginService->execute($credentials);
 
-            return response()->json([$auth], 200);
+            return response()->json($auth, 200);
         } catch (Exception $e) {
             return response()->json([
                 'error' => true,
